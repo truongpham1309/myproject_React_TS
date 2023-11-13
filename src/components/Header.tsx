@@ -1,11 +1,12 @@
 const Header = () => {
+
     return (
         <header className="w-[80%] mx-auto">
             <div className="flex flex-row py-14 px-20">
                 <div className="flex-grow">
                     <h1 className="text-3xl font-semibold">PHAM DINH TRUONG</h1>
                     <h2 className="text-sm text-gray-500">
-                        A Front-end Developer
+                        A Frontend Developer
                     </h2>
                 </div>
                 <div className="">
@@ -16,7 +17,7 @@ const Header = () => {
                     />
                 </div>
             </div>
-            <nav className="px-20 bg-gray-900 bg-gradient-to-b from-gray-800 to-gray-900 text-sm text-white shadow">
+            <nav className="navigation px-20 bg-gray-900 bg-gradient-to-b from-gray-800 to-gray-900 text-sm text-white shadow">
                 <ul className="flex">
                     <a href="/"><li className="px-3 py-3 hover:bg-white hover:text-black">
                         Home
@@ -39,7 +40,6 @@ const Header = () => {
                     className="w-full object-cover object-center lg:h-full lg:w-full aspect-square group-hover:scale-110 transition duration-300 ease-in-out"
                 />
             </div>
-
         </header>
     )
 }
