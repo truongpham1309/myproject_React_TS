@@ -1,78 +1,72 @@
 
 const LoginPage = () => {
     return (
-      <div className="h-auto mt-10 flex items-center justify-center">
-        <div className="w-full max-w-sm p-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <form className="space-y-6" action="#">
-            <h5 className="text-xl font-medium text-gray-900 dark:text-white">
-              Sign in to our platform
-            </h5>
-            <div>
-              <label
-                htmlFor="email"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Your email
-              </label>
+      <div>
+  <div className="flex justify-center items-center w-full h-[100vh] bg-white px-5 py-5">
+    <div className="xl:max-w-7xl bg-white drop-shadow-xl border border-black/20 w-full rounded-md flex justify-between items-stretch px-5 xl:px-5 py-2.5">
+      <div className="sm:w-[60%] lg:w-[50%] bg-cover bg-center items-center justify-center hidden md:flex ">
+        <img
+          src="https://www.tailwindtap.com/assets/components/form/createaccount/login.svg"
+          alt="login"
+          className="h-[500px]"
+        />
+      </div>
+      <div className="mx-auto w-full lg:w-1/2 md:p-10 py-5 md:py-0">
+        <h1 className="text-center text-2xl sm:text-3xl font-semibold text-blue-800">
+          Create Account
+        </h1>
+        <div className="w-full mt-5 sm:mt-8">
+          <div className="mx-auto w-full sm:max-w-md md:max-w-lg flex flex-col gap-5">
+            <div className="flex flex-col sm:flex-row gap-3">
               <input
-                type="email"
-                name="email"
-                id="email"
-                className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                placeholder="name@company.com"
+                className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
+                type="text"
+                placeholder="Your first name"
+              />
+              <input
+                className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
+                type="text"
+                placeholder="Your last name"
               />
             </div>
-            <div>
-              <label
-                htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Your password
-              </label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="••••••••"
-                className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              />
+            <input
+              className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
+              type="email"
+              placeholder="Enter your email"
+            />
+            <input
+              className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
+              type="tel"
+              placeholder="Enter your phone"
+            />
+            <input
+              className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
+              type="password"
+              placeholder="Password"
+            />
+            <div className="flex items-center gap-1 sm:gap-4 justify-start pl-2">
+              <input type="checkbox" className="text-blue-800" />
+              <h3 className="flex items-center whitespace-nowrap text-xs">
+                I agree to the{/* */}{" "}
+                <span className="text-blue-800">&nbsp;Terms</span>&nbsp;and
+                <span className="text-blue-800">&nbsp;Privacy Policy</span>.
+              </h3>
             </div>
-            <div className="flex items-start">
-              <div className="flex items-start">
-                <div className="flex items-center h-5">
-                  <input
-                    id="remember"
-                    type="checkbox"
-                    defaultValue=""
-                    className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                  />
-                </div>
-                <label
-                  htmlFor="remember"
-                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                  Remember me
-                </label>
-              </div>
-              <a
-                href="#"
-                className="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500">
-                Lost Password?
-              </a>
+            <div className="flex flex-col md:flex-row gap-2 md:gap-4">
+              <button className="md:mt-5 tracking-wide font-semibold bg-blue-800 text-white w-full py-4 rounded-lg hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                <span>Sign Up</span>
+              </button>
+              <button className="md:mt-5 tracking-wide text-blue-800 font-semibold border-blue-800 border  w-full py-4 rounded-lg hover:bg-blue-800 hover:text-white transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                <span>Sign In</span>
+              </button>
             </div>
-            <button
-              type="submit"
-              className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-              Login to your account
-            </button>
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-              Not registered?{' '}
-              <a
-                href="#"
-                className="text-blue-700 hover:underline dark:text-blue-500">
-                Create account
-              </a>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
     );
   }
   
