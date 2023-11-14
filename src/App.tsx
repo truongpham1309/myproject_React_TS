@@ -11,7 +11,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/products" element={<ProductsListPage />} />
         {/* <Route path="/product_detail/:id"  element={<ProductDetailPage idPr={{data}}/>}/> */}
