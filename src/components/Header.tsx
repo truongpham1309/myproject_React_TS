@@ -1,22 +1,41 @@
 // import { Link } from "react-router-dom"
 
+import { useEffect } from "react"
 const Header = () => {
+
+    useEffect(() => {
+
+        const navbarIcon = document.querySelector(".navbar");
+        const menuNav = document.querySelector("#menu");
+
+        console.log(menuNav?.style.display);
+        navbarIcon?.addEventListener("click", () =>{
+            if(menuNav?.style.display == ""){ 
+                menuNav.style.display = "block";
+            }
+        })
+    })
 
     return (
         <header className="w-[80%] mx-auto">
-            
-            <nav className="navigation px-20 bg-gray-900 bg-gradient-to-b from-gray-800 to-gray-900 text-sm text-white shadow">
-                <ul className="flex">
-                    <a href="/"><li className="px-3 py-3 hover:bg-white hover:text-black">
+
+            <nav className="navigation px-10 py-6 lg:py-3 bg-gray-900 bg-gradient-to-b from-gray-800 to-gray-900 text-sm text-white shadow">
+                <div className="lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-three-dots navbar cursor-pointer" viewBox="0 0 16 16">
+                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                    </svg>
+                </div>
+                <ul id="menu" className="hidden lg:flex">
+                    <a href="/"><li className="lg:px-3 py-3 hover:bg-white hover:text-black">
                         Home
                     </li></a>
-                    <a href="/products"><li className="px-3 py-3 hover:bg-white hover:text-black">
+                    <a href="/products"><li className="lg:px-3 py-3 hover:bg-white hover:text-black">
                         Products
                     </li></a>
-                    <a href="/login"><li className="px-3 py-3 hover:bg-white hover:text-black">
+                    <a href="/login"><li className="lg:px-3 py-3 hover:bg-white hover:text-black">
                         Login
                     </li></a>
-                    <a href="/profile"><li className="px-3 py-3 hover:bg-white hover:text-black relative group">
+                    <a href="/profile"><li className="lg:px-3 py-3 hover:bg-white hover:text-black relative group">
                         Profile
                     </li></a>
                 </ul>
