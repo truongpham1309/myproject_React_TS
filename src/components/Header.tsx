@@ -1,21 +1,6 @@
 // import { Link } from "react-router-dom"
 
-import { useEffect } from "react"
 const Header = () => {
-
-    useEffect(() => {
-
-        const navbarIcon = document.querySelector(".navbar");
-        const menuNav = document.querySelector("#menu");
-
-        console.log(menuNav?.style.display);
-        navbarIcon?.addEventListener("click", () =>{
-            if(menuNav?.style.display == ""){ 
-                menuNav.style.display = "block";
-            }
-        })
-    })
-
     return (
         <header className="w-[80%] mx-auto">
 
