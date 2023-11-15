@@ -3,8 +3,6 @@
 type idProduct = {
     idPr: number
 }
-
-
 const ProductDetailPage: React.FC<idProduct> = ({idPr}) => {
 
     console.log(idPr);

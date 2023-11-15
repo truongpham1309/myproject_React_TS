@@ -1,16 +1,4 @@
-import { Product } from "../types"
-
-type ProductRatingpProps = {
-    product: Product
-}
-
-
-const ProductRating: React.FC<ProductRatingpProps> = ({ product }) => {
-
-    const rate: number = Math.floor(product.rating.rate);
-
-    // console.log(rate);
-    
+const ProductRating = () => {
 
     return (
         <div className="flex items-center space-x-1 rtl:space-x-reverse">
