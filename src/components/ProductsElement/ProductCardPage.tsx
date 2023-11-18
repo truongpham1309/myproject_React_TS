@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { Product } from "../types"
+import { Product } from "../../types"
 import ProductRating from "./ProductRating"
 
 type ProductCardProps = {
@@ -19,7 +19,7 @@ const ProductCardPage: React.FC<ProductCardProps> = ({ product }) => {
             <div className="mt-4 flex justify-between">
                 <div>
                     <h3 className="text-sm text-gray-700">
-                        <Link to={"/products"}>
+                        <Link to={`/product_detail/${product.id}`}>
                             <span aria-hidden="true" className="absolute inset-0" />
                             {product.title}
                         </Link>

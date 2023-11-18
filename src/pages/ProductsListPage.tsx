@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Product } from "../types";
-import ProductCardPage from "../components/ProductCardPage";
+import ProductCardPage from "../components/ProductsElement/ProductCardPage";
 
 const ProductsListPage = () => {
     const [products, setProduct] = useState<Product[]>([]);
