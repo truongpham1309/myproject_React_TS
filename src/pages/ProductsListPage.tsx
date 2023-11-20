@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Product } from "../types";
+import { Product } from "../types/products";
 import ProductCardPage from "../components/ProductsElement/ProductCardPage";
 
 const ProductsListPage = () => {
