@@ -1,6 +1,18 @@
 const Header = () => {
+
+  const handleClickEvent = () => {
+    const nav_bar = document.querySelector("#navbar-sticky")!;
+    const isClassHidden = nav_bar.classList.contains("hidden");
+
+    if(isClassHidden) {
+      nav_bar.classList.remove("hidden");
+    }
+    else{
+      nav_bar.classList.add("hidden");
+    }
+  }
     return (
-        <nav className="bg-white dark:bg-gray-900 sm:fixed lg:relative w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+        <nav className="bg-white dark:bg-gray-900 relative w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <a
             href="https://www.typescriptlang.org/"
@@ -28,6 +40,7 @@ const Header = () => {
               className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
               aria-controls="navbar-sticky"
               aria-expanded="false"
+              onClick={handleClickEvent}
             >
               <span className="sr-only">Open main menu</span>
               <svg

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import axios from "axios";
-import { Product } from "../types";
+import { Product } from "../types/products";
 import ProductRating from "../components/ProductsElement/ProductRating";
 
 const ProductDetailPage = () => {
@@ -40,56 +40,6 @@ const ProductDetailPage = () => {
                                     className="object-contain w-full h-full "
                                 />
                             </div>
-                            {/* <div className="flex-wrap hidden md:flex ">
-            <div className="w-1/2 p-2 sm:w-1/4">
-              <a
-                href="#"
-                className="block border border-blue-100 dark:border-gray-700 dark:hover:border-gray-600 hover:border-blue-300 "
-              >
-                <img
-                  src={product.image}
-                  alt=""
-                  className="object-cover w-full lg:h-32"
-                />
-              </a>
-            </div>
-            <div className="w-1/2 p-2 sm:w-1/4">
-              <a
-                href="#"
-                className="block border border-blue-100 dark:border-transparent dark:hover:border-gray-600 hover:border-blue-300"
-              >
-                <img
-                  src={product.image}
-                  alt=""
-                  className="object-cover w-full lg:h-32"
-                />
-              </a>
-            </div>
-            <div className="w-1/2 p-2 sm:w-1/4">
-              <a
-                href="#"
-                className="block border border-blue-100 dark:border-transparent dark:hover:border-gray-600 hover:border-blue-300"
-              >
-                <img
-                  src={product.image}
-                  alt=""
-                  className="object-cover w-full lg:h-32"
-                />
-              </a>
-            </div>
-            <div className="w-1/2 p-2 sm:w-1/4">
-              <a
-                href="#"
-                className="block border border-blue-100 dark:border-transparent dark:hover:border-gray-600 hover:border-blue-300"
-              >
-                <img
-                  src={product.image}
-                  alt=""
-                  className="object-cover w-full lg:h-32"
-                />
-              </a>
-            </div>
-          </div> */}
                         </div>
                     </div>
                     <div className="w-full px-4 md:w-1/2 ">
