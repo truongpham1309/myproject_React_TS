@@ -1,5 +1,23 @@
+import { useForm, SubmitHandler } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { FormValueLogin } from "../types/components";
+import axios from "axios";
+// import axios from "axios";
 
 const LoginPage = () => {
+
+  const { register, handleSubmit, formState: { errors } } = useForm<FormValueLogin>();
+
+  const FormSubmitLogin: SubmitHandler<FormValueLogin> = async ({ username, password }) => {
+
+    const { data } = await axios.post('https://fakestoreapi.com/auth/login', { username: username, password: password });
+    if (data) {
+      alert("Login successfuly");
+      localStorage.setItem("token", JSON.stringify(data.token));
+    } else {
+      alert('username or password is incorrect');
+    }
+  }
   return (
     <div className="w-[80%] mx-auto mt-4">
       <div className="flex justify-center items-center w-full bg-white px-5 py-5">
@@ -13,38 +31,27 @@ const LoginPage = () => {
           </div>
           <div className="mx-auto w-full lg:w-1/2 md:p-10 py-5 md:py-0">
             <h1 className="text-center text-2xl sm:text-3xl font-semibold text-blue-800">
-              Create Account
+              Login Account
             </h1>
             <div className="w-full mt-5 sm:mt-8">
-              <form action="">
+              <form action="" onSubmit={handleSubmit(FormSubmitLogin)}>
                 <div className="mx-auto w-full sm:max-w-md md:max-w-lg flex flex-col gap-5">
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <input
-                      className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
-                      type="text"
-                      placeholder="Your first name"
-                    />
-                    <input
-                      className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
-                      type="text"
-                      placeholder="Your last name"
-                    />
-                  </div>
                   <input
                     className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
-                    type="email"
-                    placeholder="Enter your email"
+                    type="text"
+                    id="username"
+                    {...register("username", { required: true })}
+                    placeholder="Enter your user..."
                   />
-                  <input
-                    className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
-                    type="tel"
-                    placeholder="Enter your phone"
-                  />
+                  {errors.username && <p className="text-red-500">Username is required</p>}
                   <input
                     className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
                     type="password"
-                    placeholder="Password"
+                    id="password"
+                    {...register("password", { required: true })}
+                    placeholder="Enter your password..."
                   />
+                  {errors.username && <p className="text-red-500">Password is required</p>}
                   <div className="flex items-center gap-1 sm:gap-4 justify-start pl-2">
                     <input type="checkbox" className="text-blue-800" />
                     <h3 className="flex items-center whitespace-nowrap text-xs">
@@ -54,13 +61,11 @@ const LoginPage = () => {
                     </h3>
                   </div>
                   <div className="flex flex-col md:flex-row gap-2 md:gap-4">
-                    <button type="submit" className="md:mt-5 tracking-wide font-semibold bg-blue-800 text-white w-full py-4 rounded-lg hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
-                      <span>Sign Up</span>
-                    </button>
-                    <button className="md:mt-5 tracking-wide text-blue-800 font-semibold border-blue-800 border  w-full py-4 rounded-lg hover:bg-blue-800 hover:text-white transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                    <button type="submit" className="md:mt-5 tracking-wide font-semibold bg-blue-800 text-white w-full py-4 rounded-lg hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none" >
                       <span>Sign In</span>
                     </button>
                   </div>
+                  <div className="text-center text-blue-900"><Link to={"/signup"}>Create new account</Link></div>
                 </div>
               </form>
 

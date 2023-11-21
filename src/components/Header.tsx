@@ -2,9 +2,9 @@ const Header = () => {
 
   const handleClickEvent = () => {
     const nav_bar = document.querySelector("#navbar-sticky")!;
-    const isClassHidden = nav_bar.classList.contains("hidden");
+    const hasClassHidden = nav_bar.classList.contains("hidden");
 
-    if(isClassHidden) {
+    if(hasClassHidden) {
       nav_bar.classList.remove("hidden");
     }
     else{
