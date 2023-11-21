@@ -4,3 +4,8 @@ export type Button = {
     className: string
     
 }
+
+export type FormValueLogin = {
+    username: string,
+    password: string,
+}
