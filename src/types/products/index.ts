@@ -1,4 +1,4 @@
-export type Rating = {
+export type ProductRate = {
     rate: number,
     count: number
 }
@@ -9,9 +9,5 @@ export type Product = {
     image: string,
     description: string,
     category: string,
-    rating: Rating
-}
-
-export type ProductDetails = {
-    product: Product
+    rating: ProductRate
 }

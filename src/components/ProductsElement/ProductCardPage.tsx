@@ -25,7 +25,7 @@ const ProductCardPage: React.FC<ProductCardProps> = ({ product }) => {
                         </Link>
                     </h3>
                     <p className="mt-1 text-sm text-gray-500">{product.category}</p>
-                    <ProductRating />
+                    <ProductRating rate={product.rating.rate} />
 
                 </div>
                 <p className="text-sm font-medium text-gray-900">${product.price}</p>
