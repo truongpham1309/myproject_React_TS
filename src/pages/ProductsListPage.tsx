@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Product } from "../types/products";
 import ProductCardPage from "../components/ProductsElement/ProductCardPage";
+import axios from "axios";
 
 const ProductsListPage = () => {
     const [products, setProduct] = useState<Product[]>([]);
@@ -9,7 +9,7 @@ const ProductsListPage = () => {
     useEffect(() => {
         axios.get('https://fakestoreapi.com/products').then(({ data }) => setProduct(data));
     }, []);
-
+if(!products) return <>Products Null</>
     return (
         <div className="bg-white">
             <div className="mx-auto max-w-2xl py-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">

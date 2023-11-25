@@ -3,31 +3,41 @@ import { useParams } from "react-router-dom"
 import axios from "axios";
 import { Product } from "../types/products";
 import ProductRating from "../components/ProductsElement/ProductRating";
+import ProductCardPage from "../components/ProductsElement/ProductCardPage";
 
 const ProductDetailPage = () => {
     const { productID } = useParams();
-    const initProduct: Product = {
-        id: 0,
-        title: '',
-        image: '',
-        category: '',
-        description: '',
-        rating: {
-            rate: 0,
-            count: 0,
-        },
-        price: 0,
+    const [product, setProduct] = useState<Product>();
+    const [productsRelatedList, setProductsRelatedList] = useState<Product[]>([]);
+
+    const getProductDetail = async (id: number) => {
+        try {
+            const [{ data: productDetail }, { data: productsRelated }] = await Promise.all([
+                axios.get(`https://fakestoreapi.com/products/${id}`), 
+                axios.get(`https://fakestoreapi.com/products`)]);
+                
+            if (!productDetail) {
+                return;
+            }
+            console.log(productsRelated);
+
+            setProduct(productDetail);
+
+            const newProductsRelatedList = productsRelated
+                .filter((product: Product) => product.category === productDetail.category
+                    && product.id !== productDetail.id);
+
+            setProductsRelatedList(newProductsRelatedList);
+        } catch (error) {
+            throw new Error("Error fetching");
+        }
+
     }
-    const [product, setProduct] = useState<Product>(initProduct);
-
     useEffect(() => {
-        axios.get(`https://fakestoreapi.com/products/${productID}`).then(({ data }) => {
-            setProduct(data)
-        });
-    });
-    if (!product) return (<div className="font-bold text-3xl my-10 text-center">Product is not exist</div>)
+        getProductDetail(Number(productID));
+    }, [productID]);
+    if (!product) return (<div className="font-bold text-3xl my-10 text-center">Product is not exist</div>);
     return (
-
         <section className="py-20 overflow-hidden bg-white font-poppins dark:bg-gray-800">
             <div className="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
                 <div className="flex flex-wrap -mx-4">
@@ -51,7 +61,7 @@ const ProductDetailPage = () => {
                                 <h2 className="max-w-xl mt-2 mb-6 text-xl font-bold dark:text-gray-300 md:text-4xl">
                                     {product.title}
                                 </h2>
-                                <ProductRating />
+                                <ProductRating rate={product.rating.rate} />
                                 <p className="max-w-md mb-8 text-gray-700 dark:text-gray-400">
                                     {product.description}
                                 </p>
@@ -132,6 +142,12 @@ const ProductDetailPage = () => {
                         </div>
                     </div>
                 </div>
+
+            </div>
+            <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                {productsRelatedList.map(product => (
+                    <ProductCardPage product={product} key={product.id}/>
+                ))}
             </div>
         </section>
 
