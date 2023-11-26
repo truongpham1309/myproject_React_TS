@@ -1,8 +1,3 @@
 {
-    "routes": [
-      { "src": "/", "dest": "/" },
-      { "src": "/login", "dest": "/" },
-      { "src": "/profile", "dest": "/" },
-      { "src": "/products", "dest": "/" }
-    ]
-  }
+  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
+}

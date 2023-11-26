@@ -25,15 +25,23 @@ const AdminHomePage = () => {
   });
   const handleRemoveProducts = async (e: React.SyntheticEvent<HTMLElement>) => {
     const idProduct = e.currentTarget.dataset.id;
-    if(!confirm("Are you sure you want to remove")) return;
-    try {
-      await axios.delete(`https://fakestoreapi.com/users/${idProduct}`);
-      toast.success(`Successfully deleted`);
-      const newProductsList = productsList.filter(p => p.id !== Number(idProduct));
-      setProductsList(newProductsList);
-    } catch (error) {
-      console.log(error);
-    }
+    if (!confirm("Are you sure you want to remove")) return;
+
+    toast.promise((async () => {
+      try {
+        await axios.delete(`https://fakestoreapi.com/users/${idProduct}`);
+        const newProductsList = productsList.filter(p => p.id !== Number(idProduct));
+        setProductsList(newProductsList);
+        return;
+      } catch (error) {
+        console.log(error);
+      }
+    })(),{
+      pending: "Deleting...",
+      success: "Successfully deleted ✅",
+      error: "Failed to delete ❌"
+    })
+
   }
 
   useEffect(() => {
@@ -63,7 +71,7 @@ const AdminHomePage = () => {
         theme="light"
         style={{ fontSize: "15px" }}
       />
-      <h1 className="font-bold text-center py-5  dark:bg-gray-700 dark:text-gray-400">Products Admin List</h1>
+      <h1 className="font-bold text-center py-5  dark:bg-gray-700 dark:text-gray-400">Products List Admin </h1>
       <div className="relative overflow-x-auto shadow-md">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

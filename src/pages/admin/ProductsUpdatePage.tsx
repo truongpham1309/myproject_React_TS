@@ -1,53 +1,76 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom";
-import { Product } from "../../types/products";
+import { useNavigate, useParams } from "react-router-dom";
+import { Product, initalProduct } from "../../types/products";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
 import axios from "axios";
 
 const ProductsUpdatePage = () => {
-  const initalProduct: Product = {
-    id: 0,
-    title: "",
-    image: "",
-    price: 0,
-    description: "",
-    category: "",
-    rating: {
-      rate: 0,
-      count: 0,
-    }
-  }
   const [categories, setCategories] = useState<string[]>([]);
   const [product, setProduct] = useState<Product>(initalProduct);
   const { productID } = useParams();
+  const navigate = useNavigate();
 
   const handleChangeInfoProduct = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-      console.log(e.currentTarget);
-      setProduct({...product, [e.currentTarget.name]: e.currentTarget.value});
-      console.log(product);
+    setProduct({ ...product, [e.currentTarget.name]: e.currentTarget.value });
   }
 
-  const getProductDetail = async (id: number) => {
-    try {
-      const [{ data: category }, { data: product }] = await Promise.all([
-        axios.get("https://fakestoreapi.com/products/categories"),
-        axios.get(`https://fakestoreapi.com/products/${id}`)]);
-      setProduct(product);
-      setCategories(category);
-    } catch (error) {
-      toast.error("Failed!")
-      console.log(error);
+  const handleSubmitFormUpdate = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    let error: boolean = false;
+    if (product.title.trim().length === 0) {
+      error = true;
+      toast.error("Title is required!");
     }
+    if (product.price <= 0) {
+      error = true;
+      toast.error("Price cannot be less than or equal to 0!");
+    }
+    if (product.category.trim().length === 0) {
+      error = true;
+      toast.error("Category is required!");
+    }
+
+    if (error) return;
+
+    toast.promise((async () => {
+      try {
+        const { data } = await axios.put(`https://fakestoreapi.com/products/${productID}`, { ...product });
+        console.log(data);
+        navigate("/admin/products")
+      }
+      catch (err) {
+        console.log(error);
+      }
+    })(), {
+      pending: "Updating",
+      success: "Success👌",
+      error: "Failed ❌",
+    })
+
+
+
+
   }
 
   useEffect(() => {
     toast.promise(
-      getProductDetail(Number(productID)),{
-        pending: "Get Product pending",
-        success: "Get Product completed successfully👌",
-        error: "Get Product failed! Please try again🤯",
-      }
+      (async () => {
+        try {
+          const [{ data: category }, { data: product }] = await Promise.all([
+            axios.get("https://fakestoreapi.com/products/categories"),
+            axios.get(`https://fakestoreapi.com/products/${productID}`)]);
+          setProduct(product);
+          setCategories(category);
+        } catch (error) {
+          toast.error("Failed!")
+          console.log(error);
+        }
+      })(), {
+      pending: "Get Product pending",
+      success: "Get Product completed successfully👌",
+      error: "Get Product failed! Please try again🤯",
+    }
     )
   }, [productID]);
 
@@ -58,11 +81,11 @@ const ProductsUpdatePage = () => {
       <div className="flex justify-center items-center w-full bg-white">
         {/* COMPONENT CODE */}
         <div className="container mx-auto my-4 px-4 lg:px-20">
-          <form action="">
+          <form action="" onSubmit={handleSubmitFormUpdate}>
             <div className="w-full p-8 my-4 md:px-12 lg:w-full lg:pl-20 lg:pr-40 mr-auto rounded-2xl shadow-2xl">
               <div className="flex">
                 <h1 className="font-bold uppercase text-5xl">
-                  Create a <br /> products
+                  Update products
                 </h1>
               </div>
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
@@ -70,16 +93,16 @@ const ProductsUpdatePage = () => {
                   className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                   type="text"
                   name="title"
-                  value={product.title || "Đang cập nhật"}
+                  value={product.title}
                   onChange={handleChangeInfoProduct}
                   placeholder="Title*"
                 />
 
                 <input
                   className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                  type="text"
+                  type="number"
                   name="price"
-                  value={product.price || "Đang cập nhật"}
+                  value={product.price}
                   onChange={handleChangeInfoProduct}
                   placeholder="Price*"
                 />
@@ -109,6 +132,7 @@ const ProductsUpdatePage = () => {
               </div>
               <div className="my-2 w-1/2 lg:w-1/4">
                 <button
+                  type="submit"
                   className="uppercase text-sm font-bold tracking-wide bg-green-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline"
                 >
                   Update
