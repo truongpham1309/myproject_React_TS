@@ -3,10 +3,27 @@ import { useEffect, useState } from "react"
 import { Product, initalProduct } from "../../types/products";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const ProductsCreatePage = () => {
     const [categories, setCategories] = useState<string[]>([]);
     const [productAdd, setProductAdd] = useState<Product>(initalProduct);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!localStorage.getItem("token")) {
+            toast.info("You need to login!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            navigate("/login");
+        }
+    });
 
     const handleChangeInfoProductAdd = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         setProductAdd({ ...productAdd, [e.currentTarget.name]: e.currentTarget.value });
@@ -37,13 +54,13 @@ const ProductsCreatePage = () => {
 
         toast.promise((async () => {
             try {
-                const { data } = await axios.post("https://fakestoreapi.com/products", {...productAdd});
+                const { data } = await axios.post("https://fakestoreapi.com/products", { ...productAdd });
                 console.log(data);
                 return;
             } catch (error) {
                 console.log(error);
             }
-        })(),{
+        })(), {
             pending: "Creating...",
             success: "Create Successfully ✅",
             error: "Create Failed ❌",

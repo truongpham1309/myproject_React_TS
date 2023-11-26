@@ -6,10 +6,26 @@ import "react-toastify/dist/ReactToastify.css"
 import axios from "axios";
 
 const ProductsUpdatePage = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      toast.info("You need to login!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      navigate("/login");
+    }
+  });
+
   const [categories, setCategories] = useState<string[]>([]);
   const [product, setProduct] = useState<Product>(initalProduct);
   const { productID } = useParams();
-  const navigate = useNavigate();
 
   const handleChangeInfoProduct = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     setProduct({ ...product, [e.currentTarget.name]: e.currentTarget.value });
@@ -47,12 +63,7 @@ const ProductsUpdatePage = () => {
       success: "Success👌",
       error: "Failed ❌",
     })
-
-
-
-
   }
-
   useEffect(() => {
     toast.promise(
       (async () => {
