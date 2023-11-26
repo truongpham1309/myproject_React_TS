@@ -47,12 +47,7 @@ const ProductsUpdatePage = () => {
       success: "Success👌",
       error: "Failed ❌",
     })
-
-
-
-
   }
-
   useEffect(() => {
     toast.promise(
       (async () => {
