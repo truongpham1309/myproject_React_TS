@@ -1,22 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 
 type Acount = {
   username: string,
   password: string,
 }
-
 const LoginPage = () => {
   const navigate = useNavigate();
   const [acount, setAcount] = useState<Acount>({ username: "", password: "" });
-  const [errorUsername, setErrorUsername] = useState<string>('');
-  const [errorPassword, setErrorPassword] = useState<string>('');
   const [hasLoading, setHasLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) navigate("/");
+    if (token) navigate("/admin/products");
   });
 
   const handleChangeAcount = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,18 +25,14 @@ const LoginPage = () => {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (acount.username.trim().length === 0) {
-      setErrorUsername("Username is required");
+      toast.error("Username is required");
       return;
     }
-    else {
-      setErrorUsername("");
-    }
+   
     if (acount.password.trim().length === 0) {
-      setErrorPassword("Password is required");
+      toast.error("Password is required");
       return;
-    } else {
-      setErrorPassword("")
-    }
+    } 
 
     try {
       setHasLoading(true);
@@ -45,6 +40,7 @@ const LoginPage = () => {
       setHasLoading(false);
       if (data.token) {
         localStorage.setItem('token', data.token);
+        toast.success("Login successful");
         navigate("/admin/products");
       }
     } catch (error) {
@@ -54,6 +50,7 @@ const LoginPage = () => {
   }
   return (
     <div className="w-[80%] mx-auto mt-4">
+      <ToastContainer />
       <div className="flex justify-center items-center w-full bg-white px-5 py-5">
         {/* Same as */}
         <div className="xl:max-w-7xl bg-white drop-shadow-xl border border-black/20 w-full rounded-md flex justify-between items-stretch px-5 xl:px-5 py-2.5">
@@ -80,7 +77,7 @@ const LoginPage = () => {
                     onChange={handleChangeAcount}
                     placeholder="Enter your user..."
                   />
-                  {<p className="text-red-500 text-sm">{errorUsername}</p> || ""}
+                  {/* {<p className="text-red-500 text-sm">{errorUsername}</p> || ""} */}
                   <input
                     className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
                     type="password"
@@ -90,7 +87,7 @@ const LoginPage = () => {
                     // value={acount.password}
                     placeholder="Enter your password..."
                   />
-                  {<p className="text-red-500 text-sm">{errorPassword}</p> || ""}
+                  {/* {<p className="text-red-500 text-sm">{errorPassword}</p> || ""} */}
                   <div className="flex flex-col md:flex-row gap-2 md:gap-4">
                     <button type="submit" className="md:mt-5 tracking-wide font-semibold bg-blue-800 text-white w-full py-4 rounded-lg hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none" >
                       <span>{!hasLoading ? "" : (<i className="fa-solid fa-circle-notch fa-spin"></i>)}&nbsp;Sign In</span>
