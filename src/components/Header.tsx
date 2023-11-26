@@ -4,7 +4,7 @@ const Header = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if(token) setHasLogin(true);
-  });
+  },[]);
 
   const handleLogout = () => {
     if(!confirm("Do you want logged out?")) return;
