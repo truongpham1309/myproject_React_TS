@@ -24,7 +24,7 @@ const ProductsUpdatePage = () => {
   });
 
   const [categories, setCategories] = useState<string[]>([]);
-  const [product, setProduct] = useState<Product>(initalProduct);
+  const [product, setProduct] = useState<Omit<Product, "_id">>(initalProduct);
   const { productID } = useParams();
 
   const handleChangeInfoProduct = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {

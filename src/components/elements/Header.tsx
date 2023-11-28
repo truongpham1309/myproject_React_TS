@@ -11,7 +11,7 @@ const Header = () => {
     if(!confirm("Do you want logged out?")) return;
     localStorage.removeItem("token");
     const origin = window.location.origin;
-    window.location.to = `${origin}/login`;
+    window.location.href = `${origin}/login`;
     setHasLogin(false);
   }
 
