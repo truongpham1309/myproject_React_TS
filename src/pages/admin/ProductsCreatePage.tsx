@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const ProductsCreatePage = () => {
     const [categories, setCategories] = useState<string[]>([]);
-    const [productAdd, setProductAdd] = useState<Product>(initalProduct);
+    const [productAdd, setProductAdd] = useState<Omit<Product, "_id">>(initalProduct);
     const navigate = useNavigate();
     useEffect(() => {
         if (!localStorage.getItem("token")) {
