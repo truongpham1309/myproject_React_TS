@@ -1,26 +1,18 @@
-export type ProductRate = {
-    rate: number,
-    count: number
-}
 export type Product = {
-    id: number,
+    _id: string,
     title: string,
     price: number,
     image: string,
     description: string,
     category: string,
-    rating: ProductRate
+    rate: number,
 }
  
-export const initalProduct: Product = {
-    id: 0,
+export const initalProduct: Omit<Product, "_id"> = {
     title: "",
     image: "",
     price: 0,
     description: "",
     category: "",
-    rating: {
-      rate: 0,
-      count: 0,
-    }
+    rate: 0
   }

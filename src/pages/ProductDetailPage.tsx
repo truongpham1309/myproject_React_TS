@@ -10,11 +10,11 @@ const ProductDetailPage = () => {
     const [product, setProduct] = useState<Product>();
     const [productsRelatedList, setProductsRelatedList] = useState<Product[]>([]);
 
-    const getProductDetail = async (id: number) => {
+    const getProductDetail = async (id: string) => {
         try {
             const [{ data: productDetail }, { data: productsRelated }] = await Promise.all([
-                axios.get(`https://fakestoreapi.com/products/${id}`), 
-                axios.get(`https://fakestoreapi.com/products`)]);
+                axios.get(`https://hoadv-nodejs.vercel.app/products/${id}`), 
+                axios.get(`https://hoadv-nodejs.vercel.app/products`)]);
                 
             if (!productDetail) {
                 return;
@@ -25,7 +25,7 @@ const ProductDetailPage = () => {
 
             const newProductsRelatedList = productsRelated
                 .filter((product: Product) => product.category === productDetail.category
-                    && product.id !== productDetail.id);
+                    && product._id !== productDetail._id);
 
             setProductsRelatedList(newProductsRelatedList);
         } catch (error) {
@@ -34,7 +34,7 @@ const ProductDetailPage = () => {
 
     }
     useEffect(() => {
-        getProductDetail(Number(productID));
+        getProductDetail(String(productID));
     }, [productID]);
     if (!product) return (<div className="font-bold text-3xl my-10 text-center">Product is not exist</div>);
     return (
@@ -61,14 +61,14 @@ const ProductDetailPage = () => {
                                 <h2 className="max-w-xl mt-2 mb-6 text-xl font-bold dark:text-gray-300 md:text-4xl">
                                     {product.title}
                                 </h2>
-                                <ProductRating rate={product.rating.rate} />
+                                <ProductRating rate={product.rate} />
                                 <p className="max-w-md mb-8 text-gray-700 dark:text-gray-400">
                                     {product.description}
                                 </p>
                                 <div className="p-4 mb-8 border border-gray-300 dark:border-gray-700">
                                     <h2 className="mb-4 text-xl font-semibold dark:text-gray-400">
                                         Real time{" "}
-                                        <span className="px-2 bg-blue-500 text-gray-50">{product.rating.count}</span>
+                                        <span className="px-2 bg-blue-500 text-gray-50">200</span>
                                         visitors right now!{" "}
                                     </h2>
                                     <div className="mb-1 text-xs font-medium text-gray-700 dark:text-gray-400">
@@ -146,7 +146,7 @@ const ProductDetailPage = () => {
             </div>
             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 {productsRelatedList.map(product => (
-                    <ProductCardPage product={product} key={product.id}/>
+                    <ProductCardPage product={product} key={product._id}/>
                 ))}
             </div>
         </section>

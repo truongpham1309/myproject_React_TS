@@ -7,7 +7,7 @@ const ProductsListPage = () => {
     const [products, setProduct] = useState<Product[]>([]);
 
     useEffect(() => {
-        axios.get('https://fakestoreapi.com/products').then(({ data }) => setProduct(data));
+        axios.get('https://hoadv-nodejs.vercel.app/products').then(({ data }) => setProduct(data));
     }, []);
 if(!products) return <>Products Null</>
     return (
@@ -18,7 +18,7 @@ if(!products) return <>Products Null</>
                 </h2>
                 <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                     {products.map((product) => (
-                        <ProductCardPage key={product.id} product={product} />
+                        <ProductCardPage key={product._id} product={product} />
                     ))}
                 </div>
             </div>
