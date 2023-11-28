@@ -1,5 +1,3 @@
-import FormSignUp from "../components/FormSignUp";
-
   const SignUpPage = () => {
 
   return (
@@ -19,9 +17,7 @@ import FormSignUp from "../components/FormSignUp";
             </h1>
             <div className="w-full mt-5 sm:mt-8">
               <form action="">
-                <FormSignUp />
               </form>
-
             </div>
           </div>
         </div>

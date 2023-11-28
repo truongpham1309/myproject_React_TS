@@ -5,12 +5,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 
 type Acount = {
-  username: string,
+  email: string,
   password: string,
 }
 const LoginPage = () => {
   const navigate = useNavigate();
-  const [acount, setAcount] = useState<Acount>({ username: "", password: "" });
+  const [acount, setAcount] = useState<Acount>({ email: "", password: "" });
   const [hasLoading, setHasLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -24,8 +24,8 @@ const LoginPage = () => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (acount.username.trim().length === 0) {
-      toast.error("Username is required");
+    if (acount.email.trim().length === 0) {
+      toast.error("Email is required");
       return;
     }
    
@@ -36,24 +36,26 @@ const LoginPage = () => {
 
     try {
       setHasLoading(true);
-      const { data } = await axios.post('https://fakestoreapi.com/auth/login', { username: acount.username, password: acount.password })
+      const { data } = await axios.post('https://hoadv-nodejs.vercel.app/auth/login', { email: acount.email, password: acount.password })
       setHasLoading(false);
       if (data.token) {
         localStorage.setItem('token', data.token);
         toast.success("Login successful");
         navigate("/admin/products");
+        window.location.reload();
+        return;
       }
     } catch (error) {
-      alert("Username or password incorrect");
+      toast.error("Email or password incorrect");
       setHasLoading(false);
     }
   }
   return (
-    <div className="w-[80%] mx-auto mt-4">
+    <div className="w-[80%] mx-auto mt-4 dark:bg-gray-700">
       <ToastContainer />
-      <div className="flex justify-center items-center w-full bg-white px-5 py-5">
+      <div className="flex justify-center items-center w-full bg-white px-5 py-5 dark:bg-gray-700">
         {/* Same as */}
-        <div className="xl:max-w-7xl bg-white drop-shadow-xl border border-black/20 w-full rounded-md flex justify-between items-stretch px-5 xl:px-5 py-2.5">
+        <div className="dark:bg-gray-800 xl:max-w-7xl bg-white drop-shadow-xl border border-black/20 w-full rounded-md flex justify-between items-stretch px-5 xl:px-5 py-2.5">
           <div className="sm:w-[60%] lg:w-[50%] bg-cover bg-center items-center justify-center hidden md:flex ">
             <img
               src="https://www.tailwindtap.com/assets/components/form/createaccount/login.svg"
@@ -71,13 +73,13 @@ const LoginPage = () => {
                   <input
                     className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
                     type="text"
-                    id="username"
-                    name="username"
-                    // value={acount.username}
+                    id="email"
+                    name="email"
+                    // value={acount.email}
                     onChange={handleChangeAcount}
                     placeholder="Enter your user..."
                   />
-                  {/* {<p className="text-red-500 text-sm">{errorUsername}</p> || ""} */}
+                  {/* {<p className="text-red-500 text-sm">{erroremail}</p> || ""} */}
                   <input
                     className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
                     type="password"
