@@ -53,6 +53,10 @@ const ProductsUpdatePage = () => {
       error = true;
       toast.error("Category is required!");
     }
+    if (product.rate > 5 || product.rate < 0) {
+      error = true;
+      toast.error("Rate cannot be greater than 5 or less than 0!");
+    }
 
     if (error) return;
 
