@@ -10,7 +10,7 @@ const ProductRating: React.FC<ProductRate> = ({ rate }) => {
     const ratingString: Array<number> = [1, 2, 3, 4, 5];
 
     return (
-        <div className="flex items-center space-x-1 rtl:space-x-reverse">
+        <div className="flex items-center space-x-1 my-3 rtl:space-x-reverse">
             {ratingString.map((rating, key) => {
                 return (
                     <div key={key}>

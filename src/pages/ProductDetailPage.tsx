@@ -13,8 +13,8 @@ const ProductDetailPage = () => {
     const getProductDetail = async (id: string) => {
         try {
             const [{ data: productDetail }, { data: productsRelated }] = await Promise.all([
-                axios.get(`https://hoadv-nodejs.vercel.app/products/${id}`), 
-                axios.get(`https://hoadv-nodejs.vercel.app/products`)]);
+                axios.get(`/products/${id}`), 
+                axios.get(`/products`)]);
                 
             if (!productDetail) {
                 return;
@@ -36,6 +36,7 @@ const ProductDetailPage = () => {
     useEffect(() => {
         getProductDetail(String(productID));
     }, [productID]);
+    console.log(product);
     if (!product) return (<div className="font-bold text-3xl my-10 text-center">Product is not exist</div>);
     return (
         <section className="py-20 overflow-hidden bg-white font-poppins dark:bg-gray-800">
@@ -61,6 +62,7 @@ const ProductDetailPage = () => {
                                 <h2 className="max-w-xl mt-2 mb-6 text-xl font-bold dark:text-gray-300 md:text-4xl">
                                     {product.title}
                                 </h2>
+                                <p>{product.category}</p>
                                 <ProductRating rate={product.rate} />
                                 <p className="max-w-md mb-8 text-gray-700 dark:text-gray-400">
                                     {product.description}

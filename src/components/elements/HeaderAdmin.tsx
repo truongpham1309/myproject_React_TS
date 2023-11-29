@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
-
 const HeaderAdmin = () => {
 
     const navigate = useNavigate();
-
     const handleLogout = () => {
         if (!confirm("Do you want logged out?")) return;
         localStorage.removeItem("token");
@@ -43,7 +41,7 @@ const HeaderAdmin = () => {
                     <ul className="space-y-2 font-medium">
                         <li>
                             <a
-                                href="#"
+                                href="/admin/dashboard"
                                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                             >
                                 <svg
@@ -76,10 +74,10 @@ const HeaderAdmin = () => {
                                 <span className="flex-1 ms-3 whitespace-nowrap">Categories</span>
                             </a>
                         </li>
-                        
+
                         <li>
                             <a
-                                href="#"
+                                href="/"
                                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                             >
                                 <svg
@@ -91,7 +89,7 @@ const HeaderAdmin = () => {
                                 >
                                     <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
                                 </svg>
-                                <span className="flex-1 ms-3 whitespace-nowrap">Users</span>
+                                <span className="flex-1 ms-3 whitespace-nowrap">Client</span>
                             </a>
                         </li>
                         <li>
@@ -114,6 +112,7 @@ const HeaderAdmin = () => {
                         <li>
                             <a
                                 href="#"
+                                onClick={handleLogout}
                                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                             >
                                 <svg
@@ -130,20 +129,6 @@ const HeaderAdmin = () => {
                                         strokeWidth={2}
                                         d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
                                     />
-                                </svg>
-                                <span className="flex-1 ms-3 whitespace-nowrap">Sign In</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                onClick={handleLogout}
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-left flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" viewBox="0 0 16 16">
-
-                                    <path fillRule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z" />
-                                    <path fillRule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
                                 </svg>
                                 <span className="flex-1 ms-3 whitespace-nowrap">Log Out</span>
                             </a>
