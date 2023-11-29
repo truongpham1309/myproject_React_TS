@@ -3,7 +3,7 @@ import { useState } from "react";
 import { SignUpAcount } from "../types/users";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 const SignUpPage = () => {
 
   const [hasLoading, setHasLoading] = useState(false);
@@ -25,18 +25,31 @@ const SignUpPage = () => {
       try {
         await axios.post("/auth/register", account);
 
-        const { data } = await axios.post("/auth/login", {email: account.email, password:account.password});
-        if(data.token){
+        const { data } = await axios.post("/auth/login", { email: account.email, password: account.password });
+        if (data.token) {
           localStorage.setItem("token", data.token);
           navigate("/admin/dashboard");
-        }else{
+        } else {
           navigate("/login");
         }
       } catch (error) {
-        console.log(error?.response?.data.messages);
-        const { messages } = error?.response?.data;
+        // some code that handles the error
+        if (typeof error === "string") {
+          // handle string error
+          toast.error(error);
+        } else if (error instanceof AxiosError) {
+          // handle Error object
+          if (error.response?.data.messages) {
+            toast.error(error.response.data.messages);
+          }
+          else if (error.status === 500) {
+            toast.error("Server error: " + error);
+          }
+        } else {
+          // handle other types of errors
+            toast.error("Server error: " + error);
+        }
 
-        messages.map((m: string) => toast.error(m));
       }
     })(), {
       pending: "Waiting...",

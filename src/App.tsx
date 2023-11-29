@@ -8,12 +8,13 @@ import LoginPage from "./pages/LoginPage";
 import AdminHomePage from "./pages/admin/AdminHomePage";
 import ProductsUpdatePage from "./pages/admin/ProductsUpdatePage";
 import ProductsCreatePage from "./pages/admin/ProductsCreatePage";
-import { configUseAxios } from "./config/axios";
+import { configUseAxios, configureAxiosResponse } from "./config/axios";
 import Layout from "./components/layouts/Layout";
 import AdminLayout from "./components/layouts/AdminLayout";
 import UserDashBoard from "./pages/admin/UserDashBoard";
 
 configUseAxios();
+configureAxiosResponse();
 
 export default function App() {
   return (

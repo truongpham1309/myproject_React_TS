@@ -27,7 +27,6 @@ const ProductsCreatePage = () => {
 
     const handleChangeInfoProductAdd = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         setProductAdd({ ...productAdd, [e.currentTarget.name]: e.currentTarget.value });
-        console.log(productAdd);
     }
 
     const handleSubmitFormAddProduct = (e: React.SyntheticEvent) => {
