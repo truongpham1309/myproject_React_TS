@@ -36,7 +36,7 @@ const LoginPage = () => {
 
     try {
       setHasLoading(true);
-      const { data } = await axios.post('https://hoadv-nodejs.vercel.app/auth/login', { email: acount.email, password: acount.password })
+      const { data } = await axios.post('/auth/login', { email: acount.email, password: acount.password })
       setHasLoading(false);
       if (data.token) {
         localStorage.setItem('token', data.token);

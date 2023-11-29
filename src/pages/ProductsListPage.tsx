@@ -2,14 +2,22 @@ import { useEffect, useState } from "react";
 import { Product } from "../types/products";
 import ProductCardPage from "../components/ProductsElement/ProductCardPage";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ProductsListPage = () => {
     const [products, setProduct] = useState<Product[]>([]);
-
+    
+    const navigate = useNavigate();
     useEffect(() => {
-        axios.get('https://hoadv-nodejs.vercel.app/products').then(({ data }) => setProduct(data));
-    }, []);
-if(!products) return <>Products Null</>
+         if(!localStorage.getItem("token")){
+            navigate("/login");
+            return;
+        }
+        axios.get('/products').then(({ data }) => setProduct(data)).catch(({ response }) => {
+            console.log(response);
+        });
+    }, [navigate]);
+    if (products.length === 0) return <>Bạn chưa có sản phẩm nào!</>
     return (
         <div className="bg-white">
             <div className="mx-auto max-w-2xl py-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">

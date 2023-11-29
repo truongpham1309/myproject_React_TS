@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Product } from "../../types/products";
@@ -6,6 +6,7 @@ import axios from "axios";
 
 const AdminHomePage = () => {
   const [productsList, setProductsList] = useState<Product[]>([]);
+  const typingProduct = useRef<Product[]>(productsList);
 
   const handleRemoveProducts = async (e: React.SyntheticEvent<HTMLElement>) => {
     const idProduct = e.currentTarget.dataset.id;
@@ -26,12 +27,17 @@ const AdminHomePage = () => {
     })
   }
 
+  const handleChangeSearchName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newProductList = typingProduct.current.filter(p => (p.title.toLowerCase()).startsWith(e.target.value.toLowerCase()) || (p.title.toLowerCase()).endsWith(e.target.value.toLowerCase()));
+    setProductsList(newProductList);
+  }
+
   useEffect(() => {
     (async () => {
       try {
         const { data } = await axios.get("/products");
         setProductsList(data);
-        return;
+        typingProduct.current = data;
       } catch (error) {
         toast.error("Server error: " + error);
         console.log(error);
@@ -40,16 +46,60 @@ const AdminHomePage = () => {
     })();
   }, [])
 
+  if(productsList.length === 0){
+    return (
+    <div className="px-2 sm:ml-64">
+      <h2 className="font-bold text-3xl text-center my-auto">Bạn chưa có sản phẩm nào!</h2>
+    </div>
+      
+    )
+  }
   return (
     <div className="px-2 sm:ml-64">
       <div className="font-bold text-3xl text-center">
         <h1 className="font-bold text-center py-5 uppercase dark:bg-gray-700 dark:text-gray-400">Products List Admin </h1>
         <div className="relative overflow-x-auto shadow-md">
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <form>
+            <label
+              htmlFor="default-search"
+              className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+            >
+              Search
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg
+                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="search"
+                id="default-search"
+                onChange={handleChangeSearchName}
+                className="outline-none mb-4 block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Search Name Product..."
+              />
+
+            </div>
+          </form>
+
+          <table className="w-full rounded-md text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
-                  id
+                  #
                 </th>
                 <th scope="col" className="px-6 py-3">
                   <div className="flex items-center">
@@ -67,7 +117,7 @@ const AdminHomePage = () => {
                     </a>
                   </div>
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-3 py-3">
                   <div className="flex items-center">
                     Category
                     <a href="#">
@@ -83,7 +133,7 @@ const AdminHomePage = () => {
                     </a>
                   </div>
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-3 py-3">
                   <div className="flex items-center">
                     Price
                     <a href="#">
@@ -99,7 +149,7 @@ const AdminHomePage = () => {
                     </a>
                   </div>
                 </th>
-                <th scope="col" className="px-6 py-3 text-center">
+                <th scope="col" className="px-2 py-3 text-right">
                   <a href="/admin/create_product"><button className="bg-green-500 text-center mx-auto py-3 px-5 rounded-md text-white">CREATE PRODUCTS</button></a>
                 </th>
               </tr>
@@ -110,17 +160,17 @@ const AdminHomePage = () => {
                   <td className="px-6 py-4">{index + 1}</td>
                   <th
                     scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    className="px-6 py-4 font-medium text-gray-900 break-words dark:text-white"
                   >
                     {product.title}
                   </th>
-                  <td className="px-6 py-4">{product.category}</td>
-                  <td className="px-6 py-4">${product.price}</td>
-                  <td className="px-6 py-4 text-right">
+                  <td className="px-3 py-4">{product.category}</td>
+                  <td className="px-3 py-4">${product.price}</td>
+                  <td className="px-2 py-4 text-right flex">
                     <a
                       href={`/admin/update_product/${product._id}`}
                       className="font-medium text-white hover:underline"
-                    ><button className="bg-green-500 py-2 px-6 rounded-md">
+                    ><button className="bg-green-500 py-2 px-6 rounded-md flex">
                         Edit
                       </button>
                     </a>

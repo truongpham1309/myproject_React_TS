@@ -11,6 +11,7 @@ import ProductsCreatePage from "./pages/admin/ProductsCreatePage";
 import { configUseAxios } from "./config/axios";
 import Layout from "./components/layouts/Layout";
 import AdminLayout from "./components/layouts/AdminLayout";
+import UserDashBoard from "./pages/admin/UserDashBoard";
 
 configUseAxios();
 
@@ -21,16 +22,18 @@ export default function App() {
         <Route path="/" element={<Layout />} >
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/products" element={<ProductsListPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/product_detail/:productID" element={<ProductDetailPage />} />
           <Route path="/" element={<HomePage />} />
         </Route>
+        
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/login" element={<LoginPage />} />
 
         <Route path="/" element={<AdminLayout />} >
           <Route path="/admin/products" element={<AdminHomePage />} />
           <Route path="/admin/update_product/:productID" element={<ProductsUpdatePage />} />
           <Route path="/admin/create_product" element={<ProductsCreatePage />} />
+          <Route path="/admin/dashboard" element={<UserDashBoard />} />
         </Route>
       </Routes>
     </BrowserRouter >
