@@ -4,7 +4,7 @@ import { SignUpAcount } from "../types/users";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
 import axios from "axios";
-import SignInForm from "../components/forms/SignInForm";
+import FormLoginSignUp from "../components/forms/SignInForm";
 const SignUpPage = () => {
 
   const [hasLoading, setHasLoading] = useState(false);
@@ -73,7 +73,7 @@ const SignUpPage = () => {
               Create Account
             </h1>
             <div className="w-full mt-5 sm:mt-8">
-              <SignInForm
+              <FormLoginSignUp
                 isLogin={false}
                 isInputFullName={true}
                 hasLoading={hasLoading}

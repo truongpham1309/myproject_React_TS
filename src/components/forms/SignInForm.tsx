@@ -9,12 +9,10 @@ type Props = {
     isLogin: boolean
 }
 
-const SignInForm: React.FC<Props> = ({ isInputFullName, onChangeInput, onSubmitForm, hasLoading, isLogin }) => {
+const FormLoginSignUp: React.FC<Props> = ({ isInputFullName=false, onChangeInput, onSubmitForm, hasLoading, isLogin }) => {
     return (
         <form action="" onSubmit={onSubmitForm}>
             <div className="mx-auto w-full sm:max-w-md md:max-w-lg flex flex-col gap-5">
-
-
                 {!isInputFullName || (<input
                     className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
                     type="text"
@@ -63,4 +61,4 @@ const SignInForm: React.FC<Props> = ({ isInputFullName, onChangeInput, onSubmitF
     )
 }
 
-export default SignInForm
+export default FormLoginSignUp
