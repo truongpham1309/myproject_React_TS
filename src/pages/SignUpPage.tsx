@@ -1,9 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import { SignUpAcount } from "../types/users";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
-import axios, { AxiosError } from "axios";
+import axios from "axios";
+import SignInForm from "../components/forms/SignInForm";
 const SignUpPage = () => {
 
   const [hasLoading, setHasLoading] = useState(false);
@@ -16,6 +17,23 @@ const SignUpPage = () => {
 
   const handleChangeAcount = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAcount({ ...account, [e.target.name]: e.target.value });
+    console.log(account);
+
+  }
+
+  const loginAccount = async () => {
+    try {
+      const { data } = await axios.post("/auth/login", { email: account.email, password: account.password });
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   const handleSubmitSignUp = (e: React.SyntheticEvent) => {
@@ -24,31 +42,11 @@ const SignUpPage = () => {
     toast.promise((async () => {
       try {
         await axios.post("/auth/register", account);
-
-        const { data } = await axios.post("/auth/login", { email: account.email, password: account.password });
-        if (data.token) {
-          localStorage.setItem("token", data.token);
-          navigate("/admin/dashboard");
-        } else {
-          navigate("/login");
-        }
+        loginAccount();
       } catch (error) {
         // some code that handles the error
-        if (typeof error === "string") {
-          // handle string error
-          toast.error(error);
-        } else if (error instanceof AxiosError) {
-          // handle Error object
-          if (error.response?.data.messages) {
-            toast.error(error.response.data.messages);
-          }
-          else if (error.status === 500) {
-            toast.error("Server error: " + error);
-          }
-        } else {
-          // handle other types of errors
-            toast.error("Server error: " + error);
-        }
+        toast.error("Failed to login");
+        console.log(error);
 
       }
     })(), {
@@ -75,45 +73,13 @@ const SignUpPage = () => {
               Create Account
             </h1>
             <div className="w-full mt-5 sm:mt-8">
-              <form action="" onSubmit={handleSubmitSignUp}>
-                <div className="mx-auto w-full sm:max-w-md md:max-w-lg flex flex-col gap-5">
-                  <input
-                    className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
-                    type="text"
-                    id="fullname"
-                    name="fullname"
-                    // value={acount.email}
-                    onChange={handleChangeAcount}
-                    placeholder="Enter your fullname..."
-                  />
-                  <input
-                    className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
-                    type="text"
-                    id="email"
-                    name="email"
-                    // value={acount.email}
-                    onChange={handleChangeAcount}
-                    placeholder="Enter your email..."
-                  />
-                  {/* {<p className="text-red-500 text-sm">{erroremail}</p> || ""} */}
-                  <input
-                    className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-300 placeholder-gray-500 text-sm focus:border focus:outline-none "
-                    type="password"
-                    id="password"
-                    name="password"
-                    onChange={handleChangeAcount}
-                    // value={acount.password}
-                    placeholder="Enter your password..."
-                  />
-                  {/* {<p className="text-red-500 text-sm">{errorPassword}</p> || ""} */}
-                  <div className="flex flex-col md:flex-row gap-2 md:gap-4">
-                    <button type="submit" className="md:mt-5 tracking-wide font-semibold bg-blue-800 text-white w-full py-4 rounded-lg hover:bg-blue-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none" >
-                      <span>{!hasLoading ? "" : (<i className="fa-solid fa-circle-notch fa-spin"></i>)}&nbsp;Sign Up</span>
-                    </button>
-                  </div>
-                  <div className="text-center text-blue-900"><Link to={"/login"}>You have an account!</Link></div>
-                </div>
-              </form>
+              <SignInForm
+                isLogin={false}
+                isInputFullName={true}
+                hasLoading={hasLoading}
+                onChangeInput={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeAcount(e)}
+                onSubmitForm={(e: React.SyntheticEvent) => handleSubmitSignUp(e)}
+              />
             </div>
           </div>
         </div>

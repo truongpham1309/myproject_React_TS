@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Product } from "../../types/products";
+import FormSearchNameProducts from "../../components/forms/FormSearchNameProducts";
 import axios from "axios";
 
 const AdminHomePage = () => {
@@ -15,6 +15,7 @@ const AdminHomePage = () => {
       try {
         await axios.delete(`/products/${idProduct}`);
         const newProductsList = productsList.filter(p => p._id !== idProduct);
+        typingProduct.current = newProductsList;
         setProductsList(newProductsList);
         return;
       } catch (error) {
@@ -41,19 +42,9 @@ const AdminHomePage = () => {
       } catch (error) {
         toast.error("Server error: " + error);
         console.log(error);
-
       }
     })();
   }, [])
-
-  if(productsList.length === 0){
-    return (
-    <div className="px-2 sm:ml-64">
-      <h2 className="font-bold text-3xl text-center my-auto">Bạn chưa có sản phẩm nào!</h2>
-    </div>
-      
-    )
-  }
   return (
     <div className="px-2 sm:ml-64">
       <div className="font-bold text-3xl text-center">
@@ -84,14 +75,7 @@ const AdminHomePage = () => {
                   />
                 </svg>
               </div>
-              <input
-                type="search"
-                id="default-search"
-                onChange={handleChangeSearchName}
-                className="outline-none mb-4 block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search Name Product..."
-              />
-
+              <FormSearchNameProducts onChangeInput={handleChangeSearchName}/>
             </div>
           </form>
 
