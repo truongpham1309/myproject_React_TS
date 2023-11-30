@@ -93,7 +93,6 @@ const ProductsUpdatePage = () => {
       })(), {
       pending: "Get Product pending",
       success: "Get Product completed successfully👌",
-      error: "Get Product failed! Please try again🤯",
     })
   }, [productID, navigate]);
 
