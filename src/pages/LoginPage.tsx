@@ -3,7 +3,7 @@ import axios from "axios";
 import { ToastContainer, toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
-import SignInForm from "../components/forms/SignInForm";
+import FormLoginSignUp from "../components/forms/SignInForm";
 
 type Acount = {
   email: string,
@@ -69,7 +69,7 @@ const LoginPage = () => {
               Login Account
             </h1>
             <div className="w-full mt-5 sm:mt-8">
-              <SignInForm 
+              <FormLoginSignUp 
               isLogin={true}
               onChangeInput={handleChangeAcount} 
               isInputFullName={false}
