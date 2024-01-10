@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ToastContainer, toast} from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import FormLoginSignUp from "../components/forms/SignInForm";
 
-type Acount = {
+type Account = {
   email: string,
   password: string,
 }
 const LoginPage = () => {
   const navigate = useNavigate();
-  const [acount, setAcount] = useState<Acount>({ email: "", password: "" });
+  const [acount, setAcount] = useState<Account>({ email: "", password: "" });
   const [hasLoading, setHasLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -25,16 +25,18 @@ const LoginPage = () => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+
+    let valid: boolean = false;
     if (acount.email.trim().length === 0) {
       toast.error("Email is required");
-      return;
+      valid = true;
     }
-   
     if (acount.password.trim().length === 0) {
       toast.error("Password is required");
-      return;
-    } 
+      valid = true;
+    }
 
+    if (valid) return;
     try {
       setHasLoading(true);
       const { data } = await axios.post('/auth/login', { email: acount.email, password: acount.password })
@@ -43,7 +45,6 @@ const LoginPage = () => {
         localStorage.setItem('token', data.token);
         toast.success("Login successful");
         navigate("/admin/products");
-        window.location.reload();
         return;
       }
     } catch (error) {
@@ -69,12 +70,12 @@ const LoginPage = () => {
               Login Account
             </h1>
             <div className="w-full mt-5 sm:mt-8">
-              <FormLoginSignUp 
-              isLogin={true}
-              onChangeInput={handleChangeAcount} 
-              isInputFullName={false}
-              onSubmitForm={handleSubmit} 
-              hasLoading={hasLoading}/>
+              <FormLoginSignUp
+                isLogin={true}
+                onChangeInput={handleChangeAcount}
+                isInputFullName={false}
+                onSubmitForm={handleSubmit}
+                hasLoading={hasLoading} />
             </div>
           </div>
         </div>

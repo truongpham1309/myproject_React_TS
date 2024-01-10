@@ -35,10 +35,10 @@ export const configureAxiosResponse = () => {
             if (error.response?.data.messages) {
                 const { messages } = error.response.data;
 
-                if (typeof(messages) === "object") {
+                if (typeof (messages) === "object") {
                     messages.map((message: string) => toast.error(message));
                     return;
-                }else{
+                } else {
                     toast.error(error.response.data.message);
                     return;
                 }

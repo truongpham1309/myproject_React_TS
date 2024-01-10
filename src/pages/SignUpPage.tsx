@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css"
 import axios from "axios";
 import FormLoginSignUp from "../components/forms/SignInForm";
 const SignUpPage = () => {
-
   const [hasLoading, setHasLoading] = useState(false);
   const [account, setAcount] = useState<Omit<SignUpAcount, "_id">>({
     fullname: "",
@@ -18,7 +17,6 @@ const SignUpPage = () => {
   const handleChangeAcount = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAcount({ ...account, [e.target.name]: e.target.value });
     console.log(account);
-
   }
 
   const loginAccount = async () => {
@@ -33,18 +31,31 @@ const SignUpPage = () => {
     } catch (error) {
       console.log(error);
     }
-
   }
 
   const handleSubmitSignUp = (e: React.SyntheticEvent) => {
     e.preventDefault();
+    let valid = false;
+
+    if (account.fullname.trim().length === 0) {
+      valid = true;
+      toast.error("Fullname is required!");
+    }
+    if (account.email.trim().length === 0) {
+      valid = true;
+      toast.error("Email is required!");
+    }
+    if (account.password.trim().length === 0) {
+      valid = true;
+      toast.error("Password is required!");
+    }
+    if (valid) return;
 
     toast.promise((async () => {
       try {
         await axios.post("/auth/register", account);
         loginAccount();
       } catch (error) {
-        // some code that handles the error
         toast.error("Failed to login");
         console.log(error);
 
