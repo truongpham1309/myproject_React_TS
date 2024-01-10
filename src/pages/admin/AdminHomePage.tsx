@@ -10,7 +10,7 @@ const AdminHomePage = () => {
 
   const handleRemoveProducts = async (e: React.SyntheticEvent<HTMLElement>) => {
     const idProduct = e.currentTarget.dataset.id;
-    if (!confirm("Are you sure you want to remove")) return;
+    if (!confirm("Are you sure you want to remove?")) return;
     toast.promise((async () => {
       try {
         await axios.delete(`/products/${idProduct}`);
@@ -75,7 +75,7 @@ const AdminHomePage = () => {
                   />
                 </svg>
               </div>
-              <FormSearchNameProducts onChangeInput={handleChangeSearchName}/>
+              <FormSearchNameProducts onChangeInput={handleChangeSearchName} />
             </div>
           </form>
 
